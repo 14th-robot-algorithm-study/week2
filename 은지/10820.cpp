@@ -27,5 +27,5 @@ int main() {
 		cnt_u = 0, cnt_l = 0, cnt_s = 0, cnt_n = 0;
 	}
 
-	return 0;
+	return 0; 
 }
