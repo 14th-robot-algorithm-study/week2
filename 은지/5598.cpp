@@ -17,3 +17,26 @@ int main() {
 
 	return 0;
 }
+
+// -------------------------------------------------------
+
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string str;
+
+	while (std::cin >> str) {
+		for (std::size_t i = 0; i < str.size(); i++) {
+			if ('A' <= str[i] && str[i] <= 'C') {
+				std::cout << (char)('Z' - ('C' - str[i]));
+			}
+			else {
+				std::cout << (char)(str[i] - 3);
+			}
+		}
+		std::cout << "\n";
+	}
+
+	return 0;
+}
