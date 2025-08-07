@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+int N, M;
+int tower[5][5];
+long long maxVal = -21e8;
+int rotateFloor[5];
+
+void func(int lev) {
+
+	/*	모든층이 로테이션이 확립되면 maxVal 값 구하기	*/
+	if (lev == N) {
+		/*	윗층과 같은 숫자가 있으면 return	*/
+		for (int i = 0; i < M; i++) {	// 가로 0 ~ M-1까지 모든 방 중복 확인
+			for (int j = 1; j < N; j++) {	// 세로 윗층(0) ~ N-1 까지 위로 올라가며 중복 확인
+				for (int k = 0; k < j; k++) {
+					if (tower[j][(i + rotateFloor[j]) % M] == tower[k][(i + rotateFloor[k]) % M]) return;
+				}
+			}
+		}
+
+		long long allSum = 1;
+		int sum[5] = { 0 };
+		for (int i = 0; i < M; i++) {
+			for (int j = 0; j < N; j++) {
+				sum[i] += tower[j][(i+rotateFloor[j]) % M];
+			}
+			allSum *= sum[i];
+		}
+		if (maxVal < allSum) maxVal = allSum;
+		return;
+	}
+
+	/* 층(level)마다 로테이션 재귀 구현*/
+	for (int i = 0; i < M; i++) {
+		rotateFloor[lev] = i;
+		func(lev + 1);
+		rotateFloor[lev] = 0;
+	}
+
+}
+
+int main() {
+	cin >> N >> M;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> tower[i][j];
+		}
+	}
+	func(0);
+	cout << maxVal;
+}
